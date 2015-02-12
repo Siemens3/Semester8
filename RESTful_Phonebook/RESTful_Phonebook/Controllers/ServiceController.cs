@@ -1,46 +1,77 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using RESTful_Phonebook.Models;
+using System;
 
 namespace RESTful_Phonebook.Controllers
 {
+    [RoutePrefix("Service")]
     public class ServiceController : ApiController
     {
         List<Service> Services = new List<Service> {
-        new Service{ ServiceId = 1, Name = "John doe", PhoneNumber = "0853658422", Address ="10 Brookview grove,Tallaght,Dublin 24" },
-        new Service{ ServiceId = 2, Name = "Rick shaw", PhoneNumber = "0897816944", Address ="14 Rossfield way,Tallaght,Dublin 24 " },
-        new Service{ ServiceId = 3, Name = "Brian Mahon", PhoneNumber = "0852350865", Address ="89 Saint fibarrs close,greenhills, Dublin 12 " },
-        new Service{ ServiceId = 4, Name = "Shane Gough", PhoneNumber = "0869124588", Address = "113 orchard lodge green,curragh, co.Kildare"},
+        new Service{  Number = "0853658422",Name = "John doe",  Address ="10 Brookview grove,Tallaght,Dublin 24" },
+        new Service{   Number = "0897816944",Name = "Rickshaw", Address ="14 Rossfield way,Tallaght,Dublin 24 " },
+        new Service{  Number = "0852350865",Name = "Brian Mahon",  Address ="89 Saint fibarrs close,greenhills, Dublin 12 " },
+        new Service{  Number = "0869124588", Name = "Shane Gough", Address = "113 orchard lodge green,curragh, co.Kildare"},
     };
+        //get: phonebook/Service
         // GET: api/Service
-        public IEnumerable<Service> Get()
+      /*  public IHttpActionResult GetAll()
         {
-            return Services;
+            return Ok(Services);
+        }*/
+
+        // GET: api/Service/id
+          [Route("number/{number}")]
+        public IHttpActionResult GetByNumber(String number)
+        {
+
+            var entry = Services.FirstOrDefault(s => s.Number.ToUpper() == number.ToUpper());
+            if (entry == null)
+            {
+                return NotFound();
+            }
+            return Ok(entry);
         }
 
-        // GET: api/Service/5
-        public Service Get(string name)
+        // GET: api/Service/name
+        [Route("name/{name}")]
+        public IHttpActionResult GetByName(String name)
         {
-            return Services.SingleOrDefault(s =>s.Name == name) ;
+            var entry= Services.Where(s => s.Name.ToUpper() == name.ToUpper());
+          
+            if (entry == null)
+            {
+                return NotFound();
+            }
+            return Ok(entry);
         }
 
+        /*
         // POST: api/Service
-        public void Post([FromBody]string value)
+        public void Post([FromBody]Service Service)
         {
+            Services.Add(Service); 
+            //save changes
         }
-
+       // http://www.mikesdotnetting.com/article/261/integrating-web-api-with-asp-net-razor-web-pages
         // PUT: api/Service/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(string name, [FromBody]Service service)
         {
+            Service existingService = Services.SingleOrDefault(s => s.Name == name);
+            existingService.Name = service.Name;
+            existingService.PhoneNumber = service.PhoneNumber;
+            existingService.Address = service.Address;
+
+
         }
 
         // DELETE: api/Service/5
-        public void Delete(int id)
+        public void Delete(string name)
         {
+            Services.Remove(Services.SingleOrDefault(s => s.Name == name));
         }
+         * */
     }
 }

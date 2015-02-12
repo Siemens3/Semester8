@@ -9,10 +9,8 @@ namespace RESTful_Phonebook.Models
 {
     public class Service
     {
-        public int ServiceId { get; set; }
-        public String Name { get; set; }
-        [Index("IX_UniquePhoneNumber",1, IsUnique=true)]
-        public String PhoneNumber { get; set; }
-        public String Address { get; set; }
+        public string Number { get; set; }              // unique
+        public string Name { get; set; }
+        public string Address { get; set; }
     }
 }

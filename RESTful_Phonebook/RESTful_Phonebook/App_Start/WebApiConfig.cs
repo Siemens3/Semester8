@@ -16,8 +16,8 @@ namespace RESTful_Phonebook
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                routeTemplate: "api/{controller}/{number}",
+                defaults: new { number = RouteParameter.Optional }
             );
         }
     }
