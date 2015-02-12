@@ -3,10 +3,11 @@ using System.Linq;
 using System.Web.Http;
 using RESTful_Phonebook.Models;
 using System;
+using System.Net.Http;
 
 namespace RESTful_Phonebook.Controllers
 {
-    [RoutePrefix("Service")]
+   [RoutePrefix("service")]
     public class ServiceController : ApiController
     {
         List<Service> Services = new List<Service> {
@@ -17,19 +18,22 @@ namespace RESTful_Phonebook.Controllers
     };
         //get: phonebook/Service
         // GET: api/Service
-      /*  public IHttpActionResult GetAll()
+    /*   public IHttpActionResult GetAll()
         {
             return Ok(Services);
-        }*/
+        }
+     */
 
-        // GET: api/Service/id
+        // GET: api/Service/number
           [Route("number/{number}")]
-        public IHttpActionResult GetByNumber(String number)
+        [HttpGet]
+        public IHttpActionResult GetNumber([FromBody]String number)
         {
 
             var entry = Services.FirstOrDefault(s => s.Number.ToUpper() == number.ToUpper());
             if (entry == null)
             {
+                 
                 return NotFound();
             }
             return Ok(entry);
@@ -37,7 +41,8 @@ namespace RESTful_Phonebook.Controllers
 
         // GET: api/Service/name
         [Route("name/{name}")]
-        public IHttpActionResult GetByName(String name)
+        [HttpGet]
+        public IHttpActionResult GetName(String name)
         {
             var entry= Services.Where(s => s.Name.ToUpper() == name.ToUpper());
           
