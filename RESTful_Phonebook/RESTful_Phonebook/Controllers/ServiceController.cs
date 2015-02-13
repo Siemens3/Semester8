@@ -6,7 +6,7 @@ using System;
 
 namespace RESTful_Phonebook.Controllers
 {
-    [RoutePrefix("Service")]
+    [RoutePrefix("phonebook")]
     public class ServiceController : ApiController
     {
         List<Service> Services = new List<Service> {
@@ -22,7 +22,7 @@ namespace RESTful_Phonebook.Controllers
             return Ok(Services);
         }*/
 
-        // GET: api/Service/id
+        // GET: /Service/id
           [Route("number/{number}")]
         public IHttpActionResult GetByNumber(String number)
         {
